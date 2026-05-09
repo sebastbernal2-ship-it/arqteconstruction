@@ -1,0 +1,194 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RequestStatus {
+  NEW
+  UNDER_REVIEW
+  AWAITING_INFO
+  QUOTED
+  CLOSED
+}
+
+enum QuoteStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  DECLINED
+  ON_HOLD
+}
+
+enum MessageSenderType {
+  CLIENT
+  ADMIN
+}
+
+enum ServiceType {
+  NEW_CONSTRUCTION
+  REMODELING
+  EXTERIOR_ENVELOPE
+  WINDOWS_DOORS_RAILINGS
+  INTERIOR_GLASS
+  SERVICE_MAINTENANCE
+  PRODUCTS
+}
+
+enum UserRole {
+  ADMIN
+  CLIENT
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String?
+  role      UserRole  @default(ADMIN)
+
+  requests  Request[] @relation("RequestClient")
+  quotes    Quote[]   @relation("QuoteClient")
+  messages  Message[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Request {
+  id             String        @id @default(cuid())
+  clientId       String?
+  client         User?         @relation("RequestClient", fields: [clientId], references: [id])
+
+  name           String
+  email          String
+  phone          String?
+  company        String?
+  projectAddress String?
+  serviceType    ServiceType
+  description    String
+
+  status         RequestStatus @default(NEW)
+
+  quotes         Quote[]
+  attachments    Attachment[]
+  messages       Message[]
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([clientId])
+  @@index([status])
+  @@index([serviceType])
+  @@index([createdAt])
+}
+
+model Quote {
+  id                    String          @id @default(cuid())
+  requestId             String
+  request               Request         @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  clientId              String?
+  client                User?           @relation("QuoteClient", fields: [clientId], references: [id])
+
+  version               Int             @default(1)
+  status                QuoteStatus     @default(DRAFT)
+
+  publicToken           String          @unique
+
+  title                 String?
+  notes                 String?
+  clientNotes           String?
+
+  subtotal              Decimal         @db.Decimal(12, 2)
+  taxAmount             Decimal?        @db.Decimal(12, 2)
+  totalAmount           Decimal         @db.Decimal(12, 2)
+
+  currency              String          @default("USD")
+  validUntil            DateTime?
+
+  depositAmount         Decimal?        @db.Decimal(12, 2)
+  depositPaid           Boolean         @default(false)
+  depositPaidAt         DateTime?
+  stripePaymentIntentId String?
+
+  lineItems             QuoteLineItem[]
+  attachments           Attachment[]
+  messages              Message[]
+
+  createdAt             DateTime        @default(now())
+  updatedAt             DateTime        @updatedAt
+
+  @@index([requestId])
+  @@index([clientId])
+  @@index([status])
+  @@index([publicToken])
+  @@unique([requestId, version])
+}
+
+model QuoteLineItem {
+  id          String   @id @default(cuid())
+  quoteId     String
+  quote       Quote    @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  description String
+  quantity    Decimal  @db.Decimal(12, 2)
+  unitPrice   Decimal  @db.Decimal(12, 2)
+  subtotal    Decimal  @db.Decimal(12, 2)
+
+  sortOrder   Int      @default(0)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([quoteId])
+  @@index([sortOrder])
+}
+
+model Attachment {
+  id         String   @id @default(cuid())
+
+  requestId  String?
+  request    Request? @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  quoteId    String?
+  quote      Quote?   @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  fileName   String
+  fileType   String?
+  fileSize   Int?
+  url        String
+
+  createdAt  DateTime @default(now())
+
+  @@index([requestId])
+  @@index([quoteId])
+}
+
+model Message {
+  id          String            @id @default(cuid())
+
+  requestId   String?
+  request     Request?          @relation(fields: [requestId], references: [id], onDelete: Cascade)
+
+  quoteId     String?
+  quote       Quote?            @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  senderType  MessageSenderType
+  senderName  String?
+  senderEmail String?
+
+  userId      String?
+  user        User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  body        String
+
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@index([requestId])
+  @@index([quoteId])
+  @@index([userId])
+  @@index([createdAt])
+}
