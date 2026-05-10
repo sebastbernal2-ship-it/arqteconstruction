@@ -12,14 +12,15 @@ const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined;
 };
 
-// Prisma 7 requires a pg Pool passed to the adapter, not a raw connection string.
+// Prisma 7 + @prisma/adapter-pg: pass the Pool instance directly to PrismaPg.
+// PrismaPg accepts Pool | PoolConfig — NOT { pool: Pool }.
 const pool = new Pool({
     connectionString,
     ssl: { rejectUnauthorized: false },
-    max: 1, // keep low for serverless / pgBouncer
+    max: 1, // low for serverless / pgBouncer
 });
 
-const adapter = new PrismaPg({ pool });
+const adapter = new PrismaPg(pool);
 
 export const prisma =
     globalForPrisma.prisma ??
