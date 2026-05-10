@@ -52,7 +52,6 @@ export async function createRequest(
     } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
         console.error("[createRequest error]", msg, "|", dbDebugInfo);
-        // Show host/user info (no password) so we can see exactly what URL is being used
         return {
             success: false,
             error: `DB error: ${msg} | ${dbDebugInfo}`,
