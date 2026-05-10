@@ -11,10 +11,10 @@ const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined;
 };
 
-const adapter = new PrismaPg({
-    connectionString,
-    ssl: { rejectUnauthorized: false },
-});
+// In Prisma 7, the adapter is the sole connection source at runtime.
+// The schema.prisma datasource block has no url — prisma.config.ts handles
+// CLI/migrations, and the adapter here handles runtime queries.
+const adapter = new PrismaPg(connectionString);
 
 export const prisma =
     globalForPrisma.prisma ??
