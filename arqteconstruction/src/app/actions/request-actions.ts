@@ -1,8 +1,7 @@
 "use server";
 
-import { prisma } from "@/lib/prisma";
+import { prisma, dbDebugInfo } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { getSanitizedDbInfo } from "@/lib/prisma";
 
 export type CreateRequestState = {
     success: boolean;
@@ -52,11 +51,11 @@ export async function createRequest(
         return { success: true };
     } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
-        const dbInfo = getSanitizedDbInfo();
-        console.error("[createRequest error]", msg, dbInfo);
+        console.error("[createRequest error]", msg, "|", dbDebugInfo);
+        // Show host/user info (no password) so we can see exactly what URL is being used
         return {
             success: false,
-            error: `DB error: ${msg} | URL info: ${dbInfo}`,
+            error: `DB error: ${msg} | ${dbDebugInfo}`,
         };
     }
 }

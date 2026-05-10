@@ -2,26 +2,31 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
-let connectionString = process.env.DATABASE_URL;
+const rawUrl = process.env.DATABASE_URL;
 
-if (!connectionString) {
+if (!rawUrl) {
     throw new Error("DATABASE_URL is not set.");
 }
 
-// Normalize the URL:
-// 1. Swap transaction pooler port 6543 -> session pooler port 5432
-// 2. Strip pgbouncer=true (not compatible with pg.Pool session mode)
-// 3. Strip connection_limit param
-// 4. Strip sslmode from URL entirely — we handle SSL in the Pool config below
-//    to avoid conflicts between URL-level sslmode and the ssl object.
-connectionString = connectionString
-    .replace(/:6543\//, ":5432/")
-    .replace(/[&?]pgbouncer=true/gi, "")
-    .replace(/[&?]connection_limit=\d+/gi, "")
-    .replace(/[&?]sslmode=[^&]*/gi, "");
+// Parse the URL properly instead of regex-replacing strings.
+// This avoids accidentally corrupting the username (postgres.PROJECT-REF).
+const parsed = new URL(rawUrl);
 
-// Clean up any trailing ? or & left after stripping params
-connectionString = connectionString.replace(/\?&/, "?").replace(/[?&]$/, "");
+// Session pooler needs port 5432 — swap if transaction pooler port 6543 was set.
+if (parsed.port === "6543") {
+    parsed.port = "5432";
+}
+
+// Remove pgbouncer and connection_limit params — not compatible with pg.Pool.
+parsed.searchParams.delete("pgbouncer");
+parsed.searchParams.delete("connection_limit");
+// Remove sslmode from URL — handled by Pool ssl config below to avoid cert conflicts.
+parsed.searchParams.delete("sslmode");
+
+const connectionString = parsed.toString();
+
+// Export debug info (no password) so the error handler can surface it.
+export const dbDebugInfo = `host=${parsed.hostname}:${parsed.port} user=${parsed.username}`;
 
 const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined;
@@ -31,11 +36,7 @@ const globalForPrisma = globalThis as unknown as {
 if (!globalForPrisma.pool) {
     globalForPrisma.pool = new Pool({
         connectionString,
-        // Handle SSL entirely here, not in the URL.
-        // Supabase uses a self-signed cert chain so we must disable verification.
-        ssl: {
-            rejectUnauthorized: false,
-        },
+        ssl: { rejectUnauthorized: false },
         max: 3,
         connectionTimeoutMillis: 15000,
         idleTimeoutMillis: 30000,
