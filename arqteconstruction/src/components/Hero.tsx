@@ -1,3 +1,4 @@
+"use client";
 export default function Hero() {
   return (
     <section
@@ -23,7 +24,7 @@ export default function Hero() {
         maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
       }} />
 
-      {/* Red accent line — left edge */}
+      {/* Red accent line */}
       <div style={{
         position: "absolute",
         left: 0,
@@ -33,7 +34,6 @@ export default function Hero() {
         background: "linear-gradient(to bottom, transparent, var(--red), transparent)",
       }} />
 
-      {/* Content */}
       <div style={{
         position: "relative",
         zIndex: 2,
@@ -42,31 +42,22 @@ export default function Hero() {
         padding: "120px clamp(1.5rem, 5vw, 3rem) var(--space-24)",
         width: "100%",
       }}>
-        {/* Eyebrow */}
         <div style={{
           display: "inline-flex",
           alignItems: "center",
           gap: "var(--space-3)",
           marginBottom: "var(--space-6)",
         }}>
-          <span style={{
-            display: "block",
-            width: "32px",
-            height: "2px",
-            background: "var(--red)",
-          }} />
+          <span style={{ display: "block", width: "32px", height: "2px", background: "var(--red)" }} />
           <span style={{
             fontSize: "var(--text-xs)",
             fontWeight: 600,
             letterSpacing: "0.12em",
             textTransform: "uppercase",
             color: "var(--text-muted)",
-          }}>
-            Miami, Florida
-          </span>
+          }}>Miami, Florida</span>
         </div>
 
-        {/* Headline */}
         <h1 style={{
           fontFamily: "var(--font-display)",
           fontSize: "var(--text-3xl)",
@@ -76,15 +67,12 @@ export default function Hero() {
           marginBottom: "var(--space-6)",
           maxWidth: "14ch",
         }}>
-          <span style={{ color: "var(--text)" }}>Precision</span>
-          <br />
+          <span style={{ color: "var(--text)" }}>Precision</span><br />
           <span style={{ color: "var(--text)" }}>Built.</span>{" "}
-          <span style={{ color: "var(--red)" }}>Miami</span>
-          <br />
+          <span style={{ color: "var(--red)" }}>Miami</span><br />
           <span style={{ color: "var(--text)" }}>Proven.</span>
         </h1>
 
-        {/* Subtext */}
         <p style={{
           fontSize: "var(--text-lg)",
           color: "var(--text-muted)",
@@ -97,7 +85,6 @@ export default function Hero() {
           on budget, and built to last.
         </p>
 
-        {/* CTAs */}
         <div style={{ display: "flex", gap: "var(--space-4)", flexWrap: "wrap" }}>
           <a
             href="#contact"
@@ -143,7 +130,6 @@ export default function Hero() {
           </a>
         </div>
 
-        {/* Stats row */}
         <div style={{
           marginTop: "var(--space-20)",
           display: "grid",
@@ -178,7 +164,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Crosshair decoration — right side, echoes the logo */}
+      {/* Crosshair decoration */}
       <div style={{
         position: "absolute",
         right: "5%",

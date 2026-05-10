@@ -1,3 +1,4 @@
+"use client";
 const SERVICES = [
   {
     id: "NEW_CONSTRUCTION",
@@ -77,13 +78,10 @@ export default function Services() {
       }}
     >
       <div style={{ maxWidth: "var(--content)", margin: "0 auto" }}>
-        {/* Header */}
         <div style={{ marginBottom: "var(--space-16)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-4)" }}>
             <span style={{ display: "block", width: "32px", height: "2px", background: "var(--green)" }} />
-            <span style={{ fontSize: "var(--text-xs)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-muted)" }}>
-              What We Do
-            </span>
+            <span style={{ fontSize: "var(--text-xs)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-muted)" }}>What We Do</span>
           </div>
           <h2 style={{
             fontFamily: "var(--font-display)",
@@ -91,12 +89,9 @@ export default function Services() {
             fontWeight: 800,
             letterSpacing: "-0.03em",
             maxWidth: "20ch",
-          }}>
-            Comprehensive Construction Services
-          </h2>
+          }}>Comprehensive Construction Services</h2>
         </div>
 
-        {/* Grid */}
         <div style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fill, minmax(min(340px, 100%), 1fr))",
@@ -109,37 +104,19 @@ export default function Services() {
           {SERVICES.map((service) => (
             <div
               key={service.id}
-              style={{
-                background: "var(--surface)",
-                padding: "var(--space-8)",
-                transition: "background var(--transition)",
-              }}
+              style={{ background: "var(--surface)", padding: "var(--space-8)", transition: "background var(--transition)" }}
               onMouseEnter={e => (e.currentTarget.style.background = "var(--surface-2)")}
               onMouseLeave={e => (e.currentTarget.style.background = "var(--surface)")}
             >
-              <div style={{
-                color: "var(--green-light)",
-                marginBottom: "var(--space-4)",
-                opacity: 0.9,
-              }}>
-                {service.icon}
-              </div>
+              <div style={{ color: "var(--green-light)", marginBottom: "var(--space-4)", opacity: 0.9 }}>{service.icon}</div>
               <h3 style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "var(--text-lg)",
                 fontWeight: 700,
                 marginBottom: "var(--space-3)",
                 letterSpacing: "-0.02em",
-              }}>
-                {service.title}
-              </h3>
-              <p style={{
-                fontSize: "var(--text-sm)",
-                color: "var(--text-muted)",
-                lineHeight: 1.65,
-              }}>
-                {service.description}
-              </p>
+              }}>{service.title}</h3>
+              <p style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", lineHeight: 1.65 }}>{service.description}</p>
             </div>
           ))}
         </div>
