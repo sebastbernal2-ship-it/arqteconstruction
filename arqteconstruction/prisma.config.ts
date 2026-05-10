@@ -1,5 +1,13 @@
 import "dotenv/config";
-import { defineConfig, env } from "prisma/config";
+import { defineConfig } from "prisma/config";
+
+// Support both local dev (DATABASE_URL) and Supabase Vercel integration (POSTGRES_URL_NON_POOLING).
+// prisma generate only needs to read the schema — it doesn't actually connect.
+// We provide a fallback empty string so generate never throws during postinstall.
+const migrationUrl =
+    process.env.POSTGRES_URL_NON_POOLING ??
+    process.env.DATABASE_URL ??
+    "postgresql://localhost:5432/placeholder";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
@@ -7,9 +15,6 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    // Use DATABASE_URL for both CLI and runtime — must be the session/direct URL (port 5432)
-    // not the transaction pooler (port 6543) for migrations.
-    // On Vercel, set DATABASE_URL to the Supabase Transaction pooler (port 6543).
-    url: env("DATABASE_URL"),
+    url: migrationUrl,
   },
 });
