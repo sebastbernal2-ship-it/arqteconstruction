@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  reactCompiler: true,
+  // reactCompiler removed — requires extra Babel config that conflicts with Turbopack
 };
 
 export default nextConfig;

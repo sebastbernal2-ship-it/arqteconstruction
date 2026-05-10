@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { Pool } from "pg";
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -11,10 +12,14 @@ const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined;
 };
 
-// In Prisma 7, the adapter is the sole connection source at runtime.
-// The schema.prisma datasource block has no url — prisma.config.ts handles
-// CLI/migrations, and the adapter here handles runtime queries.
-const adapter = new PrismaPg(connectionString);
+// Prisma 7 requires a pg Pool passed to the adapter, not a raw connection string.
+const pool = new Pool({
+    connectionString,
+    ssl: { rejectUnauthorized: false },
+    max: 1, // keep low for serverless / pgBouncer
+});
+
+const adapter = new PrismaPg({ pool });
 
 export const prisma =
     globalForPrisma.prisma ??
