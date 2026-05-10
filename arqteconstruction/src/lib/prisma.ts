@@ -8,19 +8,20 @@ if (!connectionString) {
     throw new Error("DATABASE_URL is not set.");
 }
 
-// Vercel env var may be set to the Transaction pooler URL (port 6543, pgbouncer=true).
-// pg.Pool needs the Session pooler (port 5432, no pgbouncer) for persistent connections.
-// Auto-fix: swap port 6543 → 5432 and strip pgbouncer=true so it works regardless
-// of which URL the user pasted into Vercel's environment variables.
+// Normalize the URL:
+// 1. Swap transaction pooler port 6543 -> session pooler port 5432
+// 2. Strip pgbouncer=true (not compatible with pg.Pool session mode)
+// 3. Strip connection_limit param
+// 4. Strip sslmode from URL entirely — we handle SSL in the Pool config below
+//    to avoid conflicts between URL-level sslmode and the ssl object.
 connectionString = connectionString
     .replace(/:6543\//, ":5432/")
     .replace(/[&?]pgbouncer=true/gi, "")
-    .replace(/[&?]connection_limit=\d+/gi, "");
+    .replace(/[&?]connection_limit=\d+/gi, "")
+    .replace(/[&?]sslmode=[^&]*/gi, "");
 
-// Ensure sslmode=require is present
-if (!connectionString.includes("sslmode=")) {
-    connectionString += connectionString.includes("?") ? "&sslmode=require" : "?sslmode=require";
-}
+// Clean up any trailing ? or & left after stripping params
+connectionString = connectionString.replace(/\?&/, "?").replace(/[?&]$/, "");
 
 const globalForPrisma = globalThis as unknown as {
     prisma: PrismaClient | undefined;
@@ -30,7 +31,11 @@ const globalForPrisma = globalThis as unknown as {
 if (!globalForPrisma.pool) {
     globalForPrisma.pool = new Pool({
         connectionString,
-        ssl: { rejectUnauthorized: false },
+        // Handle SSL entirely here, not in the URL.
+        // Supabase uses a self-signed cert chain so we must disable verification.
+        ssl: {
+            rejectUnauthorized: false,
+        },
         max: 3,
         connectionTimeoutMillis: 15000,
         idleTimeoutMillis: 30000,
