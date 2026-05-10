@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { getSanitizedDbInfo } from "@/lib/prisma";
 
 export type CreateRequestState = {
     success: boolean;
@@ -26,7 +27,7 @@ export async function createRequest(
                 success: false,
                 error: "Name, email, service type, and description are required.",
             };
-    }
+        }
 
         await prisma.request.create({
             data: {
@@ -51,11 +52,11 @@ export async function createRequest(
         return { success: true };
     } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
-        console.error("[createRequest error]", msg);
-        // Show real error on page so we can diagnose without Vercel log access
+        const dbInfo = getSanitizedDbInfo();
+        console.error("[createRequest error]", msg, dbInfo);
         return {
             success: false,
-            error: `DB error: ${msg}`,
+            error: `DB error: ${msg} | URL info: ${dbInfo}`,
         };
     }
 }
