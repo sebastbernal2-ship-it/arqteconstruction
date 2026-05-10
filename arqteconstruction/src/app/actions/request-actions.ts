@@ -3,9 +3,6 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-// Tell Vercel this function may take up to 30s (default is 10s on hobby plan).
-export const maxDuration = 30;
-
 export type CreateRequestState = {
     success: boolean;
     error?: string;
