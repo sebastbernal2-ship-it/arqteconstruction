@@ -2,10 +2,24 @@ import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { Pool } from "pg";
 
-const connectionString = process.env.DATABASE_URL;
+let connectionString = process.env.DATABASE_URL;
 
 if (!connectionString) {
     throw new Error("DATABASE_URL is not set.");
+}
+
+// Vercel env var may be set to the Transaction pooler URL (port 6543, pgbouncer=true).
+// pg.Pool needs the Session pooler (port 5432, no pgbouncer) for persistent connections.
+// Auto-fix: swap port 6543 → 5432 and strip pgbouncer=true so it works regardless
+// of which URL the user pasted into Vercel's environment variables.
+connectionString = connectionString
+    .replace(/:6543\//, ":5432/")
+    .replace(/[&?]pgbouncer=true/gi, "")
+    .replace(/[&?]connection_limit=\d+/gi, "");
+
+// Ensure sslmode=require is present
+if (!connectionString.includes("sslmode=")) {
+    connectionString += connectionString.includes("?") ? "&sslmode=require" : "?sslmode=require";
 }
 
 const globalForPrisma = globalThis as unknown as {
@@ -13,17 +27,14 @@ const globalForPrisma = globalThis as unknown as {
     pool: Pool | undefined;
 };
 
-// Reuse pool across hot-reloads in dev and across invocations in serverless.
-// Without this, every serverless cold-start creates a new pool and hangs
-// waiting for a connection that never times out.
 if (!globalForPrisma.pool) {
     globalForPrisma.pool = new Pool({
         connectionString,
         ssl: { rejectUnauthorized: false },
-        max: 1,                        // pgBouncer transaction mode: 1 connection per function instance
-        connectionTimeoutMillis: 10000, // fail fast after 10s instead of hanging forever
-        idleTimeoutMillis: 30000,       // release idle connections after 30s
-        allowExitOnIdle: true,          // don't block serverless function shutdown
+        max: 3,
+        connectionTimeoutMillis: 15000,
+        idleTimeoutMillis: 30000,
+        allowExitOnIdle: true,
     });
 }
 
