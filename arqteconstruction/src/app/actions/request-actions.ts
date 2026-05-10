@@ -26,7 +26,7 @@ export async function createRequest(
                 success: false,
                 error: "Name, email, service type, and description are required.",
             };
-        }
+    }
 
         await prisma.request.create({
             data: {
@@ -48,13 +48,14 @@ export async function createRequest(
         });
 
         revalidatePath("/");
-
         return { success: true };
     } catch (error) {
-        console.error(error);
+        const msg = error instanceof Error ? error.message : String(error);
+        console.error("[createRequest error]", msg);
+        // Show real error on page so we can diagnose without Vercel log access
         return {
             success: false,
-            error: "Something went wrong while submitting your request.",
+            error: `DB error: ${msg}`,
         };
     }
 }
