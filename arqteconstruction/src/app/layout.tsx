@@ -1,24 +1,18 @@
-import type { Metadata } from "next";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "ArTeq Construction | Miami, FL",
-  description: "Professional construction services in Miami, FL. New construction, remodeling, exterior envelope, windows, doors, railings, and interior glass.",
-  keywords: "construction, Miami, remodeling, new construction, exterior envelope, windows, doors, railings, interior glass",
-  openGraph: {
-    title: "ArTeq Construction",
-    description: "Precision-built. Miami-proven.",
-    type: "website",
-  },
+  title: 'ArTeq Construction | Miami General Contractor',
+  description: 'ArTeq Construction — licensed general contractor based in Miami, FL. New construction, remodeling, exterior envelope, windows, doors, and interior glass.',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      </head>
       <body>{children}</body>
     </html>
   );

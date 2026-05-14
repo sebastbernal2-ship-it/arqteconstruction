@@ -1,193 +1,257 @@
 "use client";
-import { useActionState } from "react";
-import { createRequest, CreateRequestState } from "@/app/actions/request-actions";
+import { useState } from 'react';
+import { submitQuoteRequest } from '@/app/actions/quote';
 
 const SERVICE_OPTIONS = [
-  { value: "", label: "Select a service..." },
-  { value: "NEW_CONSTRUCTION", label: "New Construction" },
-  { value: "REMODELING", label: "Remodeling" },
-  { value: "EXTERIOR_ENVELOPE", label: "Exterior Envelope" },
-  { value: "WINDOWS_DOORS_RAILINGS", label: "Windows, Doors & Railings" },
-  { value: "INTERIOR_GLASS", label: "Interior Glass" },
-  { value: "SERVICE_MAINTENANCE", label: "Service & Maintenance" },
-  { value: "PRODUCTS", label: "Products" },
+  'New Construction',
+  'Remodeling',
+  'Exterior Envelope',
+  'Windows, Doors & Railings',
+  'Interior Glass',
+  'Service & Maintenance',
+  'Other',
 ];
 
-const initial: CreateRequestState = { success: false };
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '0.875rem 1rem',
+  border: '1px solid rgba(0,0,0,0.14)',
+  borderRadius: 'var(--radius-md)',
+  fontSize: 'var(--text-sm)',
+  color: 'var(--text)',
+  background: '#fff',
+  outline: 'none',
+  transition: 'border-color var(--transition), box-shadow var(--transition)',
+  fontFamily: 'var(--font-body)',
+};
 
 export default function QuoteForm() {
-  const [state, formAction, pending] = useActionState(createRequest, initial);
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [focused, setFocused] = useState<string | null>(null);
 
-  const inputStyle = {
-    width: "100%",
-    background: "var(--surface-2)",
-    border: "1px solid var(--border)",
-    borderRadius: "var(--radius-md)",
-    padding: "0.75rem 1rem",
-    fontSize: "var(--text-sm)",
-    color: "var(--text)",
-    outline: "none",
-    transition: "border-color var(--transition)",
-  };
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus('loading');
+    const data = new FormData(e.currentTarget);
+    try {
+      await submitQuoteRequest({
+        firstName: data.get('firstName') as string,
+        lastName:  data.get('lastName')  as string,
+        email:     data.get('email')     as string,
+        phone:     data.get('phone')     as string,
+        service:   data.get('service')   as string,
+        message:   data.get('message')   as string,
+      });
+      setStatus('success');
+    } catch {
+      setStatus('error');
+    }
+  }
 
-  const labelStyle = {
-    display: "block",
-    fontSize: "var(--text-xs)",
-    fontWeight: 600,
-    letterSpacing: "0.06em",
-    textTransform: "uppercase" as const,
-    color: "var(--text-muted)",
-    marginBottom: "var(--space-2)",
+  const focusStyle: React.CSSProperties = {
+    borderColor: 'var(--gold)',
+    boxShadow: '0 0 0 3px rgba(160,130,58,0.12)',
   };
 
   return (
     <section
       id="contact"
       style={{
-        background: "var(--surface)",
-        padding: "clamp(var(--space-16), 10vw, var(--space-24)) clamp(1.5rem, 5vw, 3rem)",
+        background: 'var(--charcoal)',
+        padding: 'clamp(var(--space-16), 10vw, var(--space-24)) clamp(1.5rem, 5vw, 3rem)',
       }}
     >
-      <div style={{ maxWidth: "var(--content-narrow)", margin: "0 auto" }}>
+      <div style={{
+        maxWidth: '820px',
+        margin: '0 auto',
+      }}>
         {/* Header */}
-        <div style={{ marginBottom: "var(--space-12)", textAlign: "center" }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--space-3)", marginBottom: "var(--space-4)" }}>
-            <span style={{ display: "block", width: "24px", height: "2px", background: "var(--red)" }} />
-            <span style={{ fontSize: "var(--text-xs)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-muted)" }}>
-              Free Consultation
-            </span>
-            <span style={{ display: "block", width: "24px", height: "2px", background: "var(--red)" }} />
+        <div style={{ textAlign: 'center', marginBottom: 'var(--space-12)' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
+            <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--gold)' }} />
+            <span style={{
+              fontSize: 'var(--text-xs)',
+              fontWeight: 600,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.45)',
+            }}>Free Estimate</span>
+            <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--gold)' }} />
           </div>
           <h2 style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-2xl)",
+            fontFamily: 'var(--font-display)',
+            fontSize: 'var(--text-2xl)',
             fontWeight: 800,
-            letterSpacing: "-0.03em",
-            marginBottom: "var(--space-4)",
-          }}>
-            Request a Quote
-          </h2>
-          <p style={{ color: "var(--text-muted)", fontSize: "var(--text-base)", margin: "0 auto" }}>
-            Tell us about your project and we&apos;ll get back to you within 24 hours.
+            color: '#ffffff',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.1,
+            marginBottom: 'var(--space-4)',
+          }}>Let's Talk About Your Project</h2>
+          <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: 'var(--text-base)', lineHeight: 1.65 }}>
+            Tell us what you're building. We'll follow up within one business day.
           </p>
         </div>
 
-        {state.success ? (
+        {status === 'success' ? (
           <div style={{
-            textAlign: "center",
-            padding: "var(--space-16) var(--space-8)",
-            background: "var(--surface-2)",
-            borderRadius: "var(--radius-lg)",
-            border: "1px solid rgba(26, 77, 46, 0.3)",
+            background: 'rgba(255,255,255,0.05)',
+            border: '1px solid rgba(160,130,58,0.35)',
+            borderRadius: 'var(--radius-lg)',
+            padding: 'var(--space-12)',
+            textAlign: 'center',
           }}>
-            <div style={{ fontSize: "2.5rem", marginBottom: "var(--space-4)" }}>✓</div>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: 700, color: "var(--green-light)", marginBottom: "var(--space-3)" }}>
-              Request Received!
-            </h3>
-            <p style={{ color: "var(--text-muted)" }}>
-              Thank you for reaching out. We&apos;ll contact you within 24 hours to discuss your project.
-            </p>
+            <div style={{ fontSize: '2.5rem', marginBottom: 'var(--space-4)' }}>✓</div>
+            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', color: '#fff', marginBottom: 'var(--space-3)' }}>Request Received</h3>
+            <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 'var(--text-sm)' }}>We'll be in touch within one business day.</p>
           </div>
         ) : (
-          <form action={formAction} style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
-            {/* Row 1: Name + Email */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-6)" }} className="form-row">
-              <div>
-                <label style={labelStyle} htmlFor="name">Full Name *</label>
-                <input id="name" name="name" type="text" required placeholder="John Smith" style={inputStyle} />
+          <form
+            onSubmit={handleSubmit}
+            style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 'var(--radius-lg)',
+              padding: 'clamp(var(--space-8), 5vw, var(--space-12))',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 'var(--space-5)',
+            }}
+          >
+            {/* Name row */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }} className="form-row">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)' }}>First Name</label>
+                <input
+                  name="firstName" required
+                  style={{ ...inputStyle, ...(focused === 'firstName' ? focusStyle : {}) }}
+                  onFocus={() => setFocused('firstName')}
+                  onBlur={() => setFocused(null)}
+                  placeholder="John"
+                />
               </div>
-              <div>
-                <label style={labelStyle} htmlFor="email">Email *</label>
-                <input id="email" name="email" type="email" required placeholder="john@example.com" style={inputStyle} />
-              </div>
-            </div>
-
-            {/* Row 2: Phone + Company */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-6)" }} className="form-row">
-              <div>
-                <label style={labelStyle} htmlFor="phone">Phone</label>
-                <input id="phone" name="phone" type="tel" placeholder="(786) 000-0000" style={inputStyle} />
-              </div>
-              <div>
-                <label style={labelStyle} htmlFor="company">Company</label>
-                <input id="company" name="company" type="text" placeholder="Optional" style={inputStyle} />
-              </div>
-            </div>
-
-            {/* Row 3: Service + Address */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-6)" }} className="form-row">
-              <div>
-                <label style={labelStyle} htmlFor="serviceType">Service Type *</label>
-                <select id="serviceType" name="serviceType" required style={{ ...inputStyle, appearance: "none" as const }}>
-                  {SERVICE_OPTIONS.map(o => (
-                    <option key={o.value} value={o.value}>{o.label}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label style={labelStyle} htmlFor="projectAddress">Project Address</label>
-                <input id="projectAddress" name="projectAddress" type="text" placeholder="Miami, FL" style={inputStyle} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)' }}>Last Name</label>
+                <input
+                  name="lastName" required
+                  style={{ ...inputStyle, ...(focused === 'lastName' ? focusStyle : {}) }}
+                  onFocus={() => setFocused('lastName')}
+                  onBlur={() => setFocused(null)}
+                  placeholder="Smith"
+                />
               </div>
             </div>
 
-            {/* Description */}
-            <div>
-              <label style={labelStyle} htmlFor="description">Project Description *</label>
+            {/* Email / Phone */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }} className="form-row">
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)' }}>Email</label>
+                <input
+                  type="email" name="email" required
+                  style={{ ...inputStyle, ...(focused === 'email' ? focusStyle : {}) }}
+                  onFocus={() => setFocused('email')}
+                  onBlur={() => setFocused(null)}
+                  placeholder="john@example.com"
+                />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+                <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)' }}>Phone</label>
+                <input
+                  type="tel" name="phone"
+                  style={{ ...inputStyle, ...(focused === 'phone' ? focusStyle : {}) }}
+                  onFocus={() => setFocused('phone')}
+                  onBlur={() => setFocused(null)}
+                  placeholder="(786) 000-0000"
+                />
+              </div>
+            </div>
+
+            {/* Service */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)' }}>Service Needed</label>
+              <select
+                name="service" required
+                style={{ ...inputStyle, ...(focused === 'service' ? focusStyle : {}), appearance: 'none' }}
+                onFocus={() => setFocused('service')}
+                onBlur={() => setFocused(null)}
+              >
+                <option value="">Select a service...</option>
+                {SERVICE_OPTIONS.map(s => <option key={s} value={s}>{s}</option>)}
+              </select>
+            </div>
+
+            {/* Message */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-2)' }}>
+              <label style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)' }}>Project Details</label>
               <textarea
-                id="description"
-                name="description"
-                required
-                rows={5}
-                placeholder="Describe your project — scope, timeline, any specific requirements..."
-                style={{ ...inputStyle, resize: "vertical", minHeight: "120px" }}
+                name="message" rows={4}
+                style={{ ...inputStyle, resize: 'vertical', minHeight: '110px', ...(focused === 'message' ? focusStyle : {}) }}
+                onFocus={() => setFocused('message')}
+                onBlur={() => setFocused(null)}
+                placeholder="Tell us about the project — location, size, timeline..."
               />
             </div>
 
-            {state.error && (
-              <div style={{
-                padding: "var(--space-3) var(--space-4)",
-                background: "rgba(140,26,26,0.15)",
-                border: "1px solid rgba(140,26,26,0.3)",
-                borderRadius: "var(--radius-md)",
-                fontSize: "var(--text-sm)",
-                color: "#f87171",
-              }}>
-                {state.error}
-              </div>
-            )}
-
             <button
               type="submit"
-              disabled={pending}
+              disabled={status === 'loading'}
               style={{
-                padding: "1rem 2.5rem",
-                background: pending ? "var(--steel)" : "var(--red)",
-                color: "#fff",
-                fontWeight: 700,
-                fontSize: "var(--text-sm)",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                borderRadius: "var(--radius-md)",
-                border: "none",
-                cursor: pending ? "not-allowed" : "pointer",
-                transition: "background var(--transition)",
-                alignSelf: "flex-start",
+                padding: '1rem 2.5rem',
+                background: 'var(--gold)',
+                color: '#fff',
+                fontWeight: 600,
+                fontSize: 'var(--text-sm)',
+                borderRadius: 'var(--radius-md)',
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+                transition: 'background var(--transition), transform var(--transition)',
+                alignSelf: 'flex-start',
+                opacity: status === 'loading' ? 0.65 : 1,
               }}
+              onMouseEnter={e => { if (status !== 'loading') e.currentTarget.style.background = 'var(--gold-hover)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'var(--gold)'; }}
             >
-              {pending ? "Submitting…" : "Submit Request"}
+              {status === 'loading' ? 'Sending…' : 'Submit Request'}
             </button>
+
+            {status === 'error' && (
+              <p style={{ color: '#f87171', fontSize: 'var(--text-sm)' }}>Something went wrong. Please try again or call us directly.</p>
+            )}
           </form>
         )}
+
+        {/* Contact info below form */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: 'var(--space-10)',
+          marginTop: 'var(--space-10)',
+          flexWrap: 'wrap',
+        }}>
+          {[
+            { icon: '📞', label: '(786) 325-9406', href: 'tel:7863259406' },
+            { icon: '✉️', label: 'lorta@arqteconstruction.com', href: 'mailto:lorta@arqteconstruction.com' },
+            { icon: '📍', label: 'Miami, FL', href: '#' },
+          ].map(item => (
+            <a key={item.href} href={item.href} style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 'var(--space-2)',
+              fontSize: 'var(--text-sm)',
+              color: 'rgba(255,255,255,0.45)',
+              transition: 'color var(--transition)',
+            }}
+              onMouseEnter={e => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.45)'}
+            >
+              <span>{item.icon}</span>
+              {item.label}
+            </a>
+          ))}
+        </div>
       </div>
 
       <style>{`
-        @media (max-width: 640px) {
-          .form-row { grid-template-columns: 1fr !important; }
-        }
-        input:focus, textarea:focus, select:focus {
-          border-color: var(--red) !important;
-        }
-        select option { background: var(--surface-2); color: var(--text); }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>
   );

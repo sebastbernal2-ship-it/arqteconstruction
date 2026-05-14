@@ -1,199 +1,142 @@
 "use client";
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState, useEffect } from 'react';
+import Image from 'next/image';
+
+const NAV_LINKS = [
+  { label: 'Services', href: '#services' },
+  { label: 'About', href: '#about' },
+  { label: 'Contact', href: '#contact' },
+];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    window.addEventListener('scroll', handler, { passive: true });
+    return () => window.removeEventListener('scroll', handler);
   }, []);
-
-  const links = [
-    { label: "Services", href: "#services" },
-    { label: "About", href: "#about" },
-    { label: "Contact", href: "#contact" },
-  ];
 
   return (
     <>
-      <nav
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 100,
-          height: "72px",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 clamp(1.5rem, 5vw, 3rem)",
-          background: scrolled
-            ? "rgba(13,13,13,0.96)"
-            : "transparent",
-          backdropFilter: scrolled ? "blur(12px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "none",
-          transition: "background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease",
-        }}
-      >
-        {/* Logo */}
-        <a href="#" style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexShrink: 0 }}>
-          <Image
-            src="/logo.png"
-            alt="ArTeq Construction"
-            width={48}
-            height={48}
-            style={{ objectFit: "contain" }}
-            priority
-          />
-          <span style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 800,
-            fontSize: "var(--text-lg)",
-            letterSpacing: "-0.02em",
-            lineHeight: 1,
-          }}>
-            <span style={{ color: "var(--red)" }}>Ar</span>
-            <span style={{ color: "var(--text)" }}>T</span>
-            <span style={{ color: "var(--green)" }}>eq</span>
-          </span>
-        </a>
-
-        {/* Desktop nav */}
-        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "var(--space-8)" }}>
-          <ul style={{ display: "flex", gap: "var(--space-8)", listStyle: "none", margin: 0, padding: 0 }}
-            className="desktop-nav"
-          >
-            {links.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
-                  style={{
-                    fontSize: "var(--text-sm)",
-                    fontWeight: 500,
-                    color: "var(--text-muted)",
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                    transition: "color var(--transition)",
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.color = "var(--text)")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "var(--text-muted)")}
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-
-          <a
-            href="#contact"
-            className="desktop-nav"
-            style={{
-              fontSize: "var(--text-sm)",
-              fontWeight: 600,
-              padding: "0.5rem 1.25rem",
-              background: "var(--red)",
-              color: "#fff",
-              borderRadius: "var(--radius-md)",
-              letterSpacing: "0.02em",
-              transition: "background var(--transition)",
-            }}
-            onMouseEnter={e => (e.currentTarget.style.background = "var(--red-dark)")}
-            onMouseLeave={e => (e.currentTarget.style.background = "var(--red)")}
-          >
-            Get a Quote
+      <header style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        zIndex: 100,
+        height: '72px',
+        display: 'flex',
+        alignItems: 'center',
+        background: scrolled ? 'rgba(255,255,255,0.97)' : 'transparent',
+        borderBottom: scrolled ? '1px solid rgba(0,0,0,0.08)' : '1px solid transparent',
+        backdropFilter: scrolled ? 'blur(12px)' : 'none',
+        transition: 'background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease',
+      }}>
+        <div style={{
+          maxWidth: 'var(--content)',
+          margin: '0 auto',
+          padding: '0 clamp(1.5rem, 4vw, 3rem)',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+          {/* Logo */}
+          <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
+            <Image src="/logo.png" alt="ArTeq Construction" width={44} height={44} style={{ objectFit: 'contain' }} />
+            <span style={{
+              fontFamily: 'var(--font-display)',
+              fontWeight: 700,
+              fontSize: 'var(--text-lg)',
+              letterSpacing: '-0.01em',
+              color: 'var(--text)',
+            }}>
+              ArTeq
+              <span style={{ color: 'var(--gold)', marginLeft: '2px' }}>.</span>
+            </span>
           </a>
+
+          {/* Desktop nav */}
+          <nav style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)' }} className="desktop-nav">
+            {NAV_LINKS.map(link => (
+              <a key={link.href} href={link.href} style={{
+                fontSize: 'var(--text-sm)',
+                fontWeight: 500,
+                color: 'var(--text-muted)',
+                letterSpacing: '0.01em',
+                transition: 'color var(--transition)',
+              }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
+              >{link.label}</a>
+            ))}
+            <a href="#contact" style={{
+              padding: '0.6rem 1.5rem',
+              background: 'var(--charcoal)',
+              color: '#fff',
+              fontSize: 'var(--text-sm)',
+              fontWeight: 500,
+              borderRadius: 'var(--radius-md)',
+              letterSpacing: '0.02em',
+              transition: 'background var(--transition)',
+            }}
+              onMouseEnter={e => e.currentTarget.style.background = 'var(--gold)'}
+              onMouseLeave={e => e.currentTarget.style.background = 'var(--charcoal)'}
+            >Get a Quote</a>
+          </nav>
 
           {/* Hamburger */}
           <button
-            className="mobile-menu-btn"
-            onClick={() => setMenuOpen(!menuOpen)}
+            className="hamburger"
+            onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
-            style={{
-              display: "none",
-              flexDirection: "column",
-              gap: "5px",
-              padding: "var(--space-2)",
-            }}
+            style={{ display: 'none', flexDirection: 'column', gap: '5px', padding: 'var(--space-2)' }}
           >
-            {[0, 1, 2].map(i => (
-              <span key={i} style={{
-                display: "block",
-                width: "22px",
-                height: "2px",
-                background: "var(--text)",
-                borderRadius: "2px",
-                transition: "transform 200ms ease, opacity 200ms ease",
-                transform:
-                  menuOpen && i === 0 ? "translateY(7px) rotate(45deg)" :
-                  menuOpen && i === 1 ? "scaleX(0)" :
-                  menuOpen && i === 2 ? "translateY(-7px) rotate(-45deg)" :
-                  "none",
-                opacity: menuOpen && i === 1 ? 0 : 1,
-              }} />
-            ))}
+            <span style={{ display:'block', width:'22px', height:'2px', background:'var(--text)', transition:'var(--transition)', transform: open ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
+            <span style={{ display:'block', width:'22px', height:'2px', background:'var(--text)', transition:'var(--transition)', opacity: open ? 0 : 1 }} />
+            <span style={{ display:'block', width:'22px', height:'2px', background:'var(--text)', transition:'var(--transition)', transform: open ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
           </button>
         </div>
-      </nav>
+      </header>
 
       {/* Mobile menu */}
-      {menuOpen && (
+      {open && (
         <div style={{
-          position: "fixed",
-          top: "72px",
-          left: 0,
-          right: 0,
+          position: 'fixed', top: '72px', left: 0, right: 0, bottom: 0,
+          background: 'var(--surface)',
           zIndex: 99,
-          background: "rgba(13,13,13,0.98)",
-          backdropFilter: "blur(16px)",
-          borderBottom: "1px solid var(--border)",
-          padding: "var(--space-6) clamp(1.5rem, 5vw, 3rem)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-4)",
+          display: 'flex',
+          flexDirection: 'column',
+          padding: 'var(--space-8) clamp(1.5rem, 4vw, 3rem)',
+          gap: 'var(--space-6)',
+          borderTop: '1px solid var(--border)',
         }}>
-          {links.map(l => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                fontSize: "var(--text-lg)",
-                fontWeight: 600,
-                color: "var(--text)",
-                padding: "var(--space-2) 0",
-                borderBottom: "1px solid var(--divider)",
-              }}
-            >
-              {l.label}
-            </a>
+          {NAV_LINKS.map(link => (
+            <a key={link.href} href={link.href}
+              onClick={() => setOpen(false)}
+              style={{ fontSize: 'var(--text-xl)', fontFamily: 'var(--font-display)', fontWeight: 700, color: 'var(--text)' }}
+            >{link.label}</a>
           ))}
-          <a
-            href="#contact"
-            onClick={() => setMenuOpen(false)}
+          <a href="#contact"
+            onClick={() => setOpen(false)}
             style={{
-              marginTop: "var(--space-2)",
-              fontSize: "var(--text-base)",
-              fontWeight: 600,
-              padding: "0.75rem 1.5rem",
-              background: "var(--red)",
-              color: "#fff",
-              borderRadius: "var(--radius-md)",
-              textAlign: "center",
+              marginTop: 'var(--space-4)',
+              padding: '1rem 2rem',
+              background: 'var(--charcoal)',
+              color: '#fff',
+              fontSize: 'var(--text-base)',
+              fontWeight: 500,
+              borderRadius: 'var(--radius-md)',
+              textAlign: 'center',
             }}
-          >
-            Get a Quote
-          </a>
+          >Get a Quote</a>
         </div>
       )}
 
       <style>{`
         @media (max-width: 768px) {
           .desktop-nav { display: none !important; }
-          .mobile-menu-btn { display: flex !important; }
+          .hamburger { display: flex !important; }
         }
       `}</style>
     </>

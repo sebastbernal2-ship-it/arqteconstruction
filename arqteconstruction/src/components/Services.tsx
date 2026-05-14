@@ -1,70 +1,34 @@
 "use client";
 const SERVICES = [
   {
-    id: "NEW_CONSTRUCTION",
-    title: "New Construction",
-    description: "Ground-up residential and commercial builds delivered with precision scheduling, quality materials, and full code compliance.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-        <polyline points="9 22 9 12 15 12 15 22"/>
-      </svg>
-    ),
+    id: 'new-construction',
+    title: 'New Construction',
+    description: 'Ground-up residential and commercial builds, delivered on schedule with full permit management.',
   },
   {
-    id: "REMODELING",
-    title: "Remodeling",
-    description: "Transform existing spaces with expert remodeling — kitchens, bathrooms, full gut renovations, and everything in between.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
-      </svg>
-    ),
+    id: 'remodeling',
+    title: 'Remodeling',
+    description: 'Kitchens, bathrooms, full gut renovations — transformed to your exact specifications.',
   },
   {
-    id: "EXTERIOR_ENVELOPE",
-    title: "Exterior Envelope",
-    description: "Weatherproof facades, cladding systems, waterproofing, and impact-rated enclosures built for South Florida's demanding climate.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
-        <path d="M3 9h18M3 15h18M9 3v18M15 3v18"/>
-      </svg>
-    ),
+    id: 'exterior-envelope',
+    title: 'Exterior Envelope',
+    description: 'Impact-rated facades, cladding systems, and waterproofing built for South Florida's climate.',
   },
   {
-    id: "WINDOWS_DOORS_RAILINGS",
-    title: "Windows, Doors & Railings",
-    description: "Impact-rated windows and doors, custom aluminum railings, and architectural hardware installed to the highest Miami-Dade standards.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="8" height="18" rx="1"/>
-        <rect x="13" y="3" width="8" height="18" rx="1"/>
-        <path d="M11 12h2"/>
-      </svg>
-    ),
+    id: 'windows-doors',
+    title: 'Windows, Doors & Railings',
+    description: 'Miami-Dade certified impact windows, custom doors, and architectural aluminum railings.',
   },
   {
-    id: "INTERIOR_GLASS",
-    title: "Interior Glass",
-    description: "Frameless glass partitions, shower enclosures, glass railings, and custom mirrors — precision-cut and professionally installed.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-        <polyline points="2 17 12 22 22 17"/>
-        <polyline points="2 12 12 17 22 12"/>
-      </svg>
-    ),
+    id: 'interior-glass',
+    title: 'Interior Glass',
+    description: 'Frameless shower enclosures, glass partitions, railings, and mirrors — cut and installed precisely.',
   },
   {
-    id: "SERVICE_MAINTENANCE",
-    title: "Service & Maintenance",
-    description: "Scheduled maintenance, repairs, and emergency service to keep your building performing at its best year-round.",
-    icon: (
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-      </svg>
-    ),
+    id: 'service-maintenance',
+    title: 'Service & Maintenance',
+    description: 'Scheduled maintenance, warranty repairs, and emergency response year-round.',
   },
 ];
 
@@ -73,54 +37,121 @@ export default function Services() {
     <section
       id="services"
       style={{
-        background: "var(--surface)",
-        padding: "clamp(var(--space-16), 10vw, var(--space-24)) clamp(1.5rem, 5vw, 3rem)",
+        position: 'relative',
+        overflow: 'hidden',
+        minHeight: '680px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
       }}
     >
-      <div style={{ maxWidth: "var(--content)", margin: "0 auto" }}>
-        <div style={{ marginBottom: "var(--space-16)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-4)" }}>
-            <span style={{ display: "block", width: "32px", height: "2px", background: "var(--green)" }} />
-            <span style={{ fontSize: "var(--text-xs)", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--text-muted)" }}>What We Do</span>
+      {/* Background image placeholder — replace with actual project photo */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        backgroundImage: 'url(https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }} />
+
+      {/* Strong dark overlay so cards read cleanly */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to bottom, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.72) 60%, rgba(10,9,8,0.88) 100%)',
+      }} />
+
+      <div style={{
+        position: 'relative',
+        zIndex: 2,
+        width: '100%',
+        maxWidth: 'var(--content)',
+        margin: '0 auto',
+        padding: 'var(--space-24) clamp(1.5rem, 5vw, 3rem)',
+      }}>
+        {/* Section header */}
+        <div style={{ marginBottom: 'var(--space-12)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
+            <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--gold)' }} />
+            <span style={{
+              fontSize: 'var(--text-xs)',
+              fontWeight: 600,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.55)',
+            }}>What We Build</span>
           </div>
           <h2 style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "var(--text-2xl)",
+            fontFamily: 'var(--font-display)',
+            fontSize: 'var(--text-2xl)',
             fontWeight: 800,
-            letterSpacing: "-0.03em",
-            maxWidth: "20ch",
-          }}>Comprehensive Construction Services</h2>
+            color: '#ffffff',
+            letterSpacing: '-0.02em',
+            lineHeight: 1.1,
+          }}>Our Services</h2>
         </div>
 
+        {/* Service cards grid */}
         <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(min(340px, 100%), 1fr))",
-          gap: "1px",
-          background: "var(--border)",
-          border: "1px solid var(--border)",
-          borderRadius: "var(--radius-lg)",
-          overflow: "hidden",
-        }}>
-          {SERVICES.map((service) => (
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px,100%), 1fr))',
+          gap: 'var(--space-3)',
+        }} className="services-grid">
+          {SERVICES.map(service => (
             <div
               key={service.id}
-              style={{ background: "var(--surface)", padding: "var(--space-8)", transition: "background var(--transition)" }}
-              onMouseEnter={e => (e.currentTarget.style.background = "var(--surface-2)")}
-              onMouseLeave={e => (e.currentTarget.style.background = "var(--surface)")}
+              style={{
+                background: 'rgba(255,255,255,0.08)',
+                backdropFilter: 'blur(8px)',
+                WebkitBackdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                borderRadius: 'var(--radius-md)',
+                padding: 'var(--space-6) var(--space-6)',
+                transition: 'background var(--transition), border-color var(--transition), transform var(--transition)',
+                cursor: 'default',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.13)';
+                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(160,130,58,0.55)';
+                (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-2px)';
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.08)';
+                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.12)';
+                (e.currentTarget as HTMLDivElement).style.transform = 'none';
+              }}
             >
-              <div style={{ color: "var(--green-light)", marginBottom: "var(--space-4)", opacity: 0.9 }}>{service.icon}</div>
-              <h3 style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "var(--text-lg)",
-                fontWeight: 700,
-                marginBottom: "var(--space-3)",
-                letterSpacing: "-0.02em",
-              }}>{service.title}</h3>
-              <p style={{ fontSize: "var(--text-sm)", color: "var(--text-muted)", lineHeight: 1.65 }}>{service.description}</p>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 'var(--space-3)',
+                marginBottom: 'var(--space-3)',
+              }}>
+                <span style={{ display: 'block', width: '20px', height: '2px', background: 'var(--gold)', flexShrink: 0 }} />
+                <h3 style={{
+                  fontFamily: 'var(--font-display)',
+                  fontSize: 'var(--text-base)',
+                  fontWeight: 700,
+                  color: '#ffffff',
+                  letterSpacing: '-0.01em',
+                }}>{service.title}</h3>
+              </div>
+              <p style={{
+                fontSize: 'var(--text-sm)',
+                color: 'rgba(255,255,255,0.62)',
+                lineHeight: 1.65,
+                paddingLeft: 'calc(20px + var(--space-3))',
+              }}>{service.description}</p>
             </div>
           ))}
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .services-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 }

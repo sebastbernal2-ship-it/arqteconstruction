@@ -4,185 +4,166 @@ export default function Hero() {
     <section
       id="home"
       style={{
-        position: "relative",
-        minHeight: "100svh",
-        display: "flex",
-        alignItems: "center",
-        overflow: "hidden",
-        background: "var(--bg)",
+        position: 'relative',
+        minHeight: '100svh',
+        display: 'flex',
+        alignItems: 'flex-end',
+        overflow: 'hidden',
       }}
     >
-      {/* Background grid pattern */}
+      {/* Background image placeholder — replace src with real photo */}
       <div style={{
-        position: "absolute",
+        position: 'absolute',
         inset: 0,
-        backgroundImage: `
-          linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)
-        `,
-        backgroundSize: "60px 60px",
-        maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)",
+        backgroundImage: 'url(https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 30%',
       }} />
 
-      {/* Red accent line */}
+      {/* Dark gradient overlay — bottom-heavy so text stays readable */}
       <div style={{
-        position: "absolute",
-        left: 0,
-        top: "15%",
-        bottom: "15%",
-        width: "3px",
-        background: "linear-gradient(to bottom, transparent, var(--red), transparent)",
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(to top, rgba(14,12,10,0.82) 0%, rgba(14,12,10,0.35) 55%, rgba(14,12,10,0.10) 100%)',
+      }} />
+
+      {/* Thin gold rule — left edge accent */}
+      <div style={{
+        position: 'absolute',
+        left: 0, top: '18%', bottom: '18%',
+        width: '3px',
+        background: 'linear-gradient(to bottom, transparent, var(--gold), transparent)',
       }} />
 
       <div style={{
-        position: "relative",
+        position: 'relative',
         zIndex: 2,
-        maxWidth: "var(--content)",
-        margin: "0 auto",
-        padding: "120px clamp(1.5rem, 5vw, 3rem) var(--space-24)",
-        width: "100%",
+        width: '100%',
+        maxWidth: 'var(--content)',
+        margin: '0 auto',
+        padding: 'var(--space-24) clamp(1.5rem, 5vw, 3rem)',
+        paddingTop: '120px',
       }}>
         <div style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "var(--space-3)",
-          marginBottom: "var(--space-6)",
+          display: 'inline-flex',
+          alignItems: 'center',
+          gap: 'var(--space-3)',
+          marginBottom: 'var(--space-5)',
         }}>
-          <span style={{ display: "block", width: "32px", height: "2px", background: "var(--red)" }} />
+          <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--gold)' }} />
           <span style={{
-            fontSize: "var(--text-xs)",
+            fontSize: 'var(--text-xs)',
             fontWeight: 600,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "var(--text-muted)",
-          }}>Miami, Florida</span>
+            letterSpacing: '0.14em',
+            textTransform: 'uppercase',
+            color: 'rgba(255,255,255,0.65)',
+          }}>Licensed General Contractor · Miami, FL</span>
         </div>
 
         <h1 style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "var(--text-3xl)",
+          fontFamily: 'var(--font-display)',
+          fontSize: 'var(--text-3xl)',
           fontWeight: 800,
           lineHeight: 1.0,
-          letterSpacing: "-0.03em",
-          marginBottom: "var(--space-6)",
-          maxWidth: "14ch",
+          letterSpacing: '-0.02em',
+          color: '#ffffff',
+          marginBottom: 'var(--space-6)',
+          maxWidth: '16ch',
         }}>
-          <span style={{ color: "var(--text)" }}>Precision</span><br />
-          <span style={{ color: "var(--text)" }}>Built.</span>{" "}
-          <span style={{ color: "var(--red)" }}>Miami</span><br />
-          <span style={{ color: "var(--text)" }}>Proven.</span>
+          Built to Last.
+          <br />
+          <span style={{ color: 'var(--gold)' }}>Finished</span> on Time.
         </h1>
 
         <p style={{
-          fontSize: "var(--text-lg)",
-          color: "var(--text-muted)",
-          maxWidth: "52ch",
-          lineHeight: 1.6,
-          marginBottom: "var(--space-10)",
+          fontSize: 'var(--text-lg)',
+          color: 'rgba(255,255,255,0.72)',
+          maxWidth: '50ch',
+          lineHeight: 1.65,
+          marginBottom: 'var(--space-10)',
+          fontWeight: 300,
         }}>
-          From new construction to precision glass work, ArTeq delivers
-          craftsmanship that stands the test of time — on schedule,
-          on budget, and built to last.
+          ArTeq Construction delivers precision craftsmanship across South Florida —
+          from full commercial builds to custom glass and exterior envelopes.
         </p>
 
-        <div style={{ display: "flex", gap: "var(--space-4)", flexWrap: "wrap" }}>
+        <div style={{ display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap', alignItems: 'center' }}>
           <a
             href="#contact"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-              padding: "0.875rem 2rem",
-              background: "var(--red)",
-              color: "#fff",
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 'var(--space-2)',
+              padding: '0.875rem 2.25rem',
+              background: 'var(--gold)',
+              color: '#fff',
               fontWeight: 600,
-              fontSize: "var(--text-sm)",
-              borderRadius: "var(--radius-md)",
-              letterSpacing: "0.02em",
-              transition: "background var(--transition), transform var(--transition)",
+              fontSize: 'var(--text-sm)',
+              borderRadius: 'var(--radius-md)',
+              letterSpacing: '0.03em',
+              textTransform: 'uppercase',
+              transition: 'background var(--transition), transform var(--transition)',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = "var(--red-dark)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = "var(--red)"; e.currentTarget.style.transform = "none"; }}
+            onMouseEnter={e => { e.currentTarget.style.background = 'var(--gold-hover)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'var(--gold)'; e.currentTarget.style.transform = 'none'; }}
           >
             Request a Quote
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
           <a
             href="#services"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "var(--space-2)",
-              padding: "0.875rem 2rem",
-              background: "transparent",
-              color: "var(--text-muted)",
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 'var(--space-2)',
+              padding: '0.875rem 2rem',
+              color: 'rgba(255,255,255,0.75)',
               fontWeight: 500,
-              fontSize: "var(--text-sm)",
-              borderRadius: "var(--radius-md)",
-              border: "1px solid var(--border)",
-              letterSpacing: "0.02em",
-              transition: "border-color var(--transition), color var(--transition)",
+              fontSize: 'var(--text-sm)',
+              borderRadius: 'var(--radius-md)',
+              border: '1px solid rgba(255,255,255,0.25)',
+              letterSpacing: '0.02em',
+              transition: 'border-color var(--transition), color var(--transition)',
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)"; e.currentTarget.style.color = "var(--text)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.color = "var(--text-muted)"; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.55)'; e.currentTarget.style.color = '#fff'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)'; e.currentTarget.style.color = 'rgba(255,255,255,0.75)'; }}
           >
             Our Services
           </a>
         </div>
 
+        {/* Stats bar */}
         <div style={{
-          marginTop: "var(--space-20)",
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-          gap: "var(--space-8)",
-          paddingTop: "var(--space-8)",
-          borderTop: "1px solid var(--divider)",
-          maxWidth: "600px",
+          display: 'flex',
+          gap: 'var(--space-10)',
+          flexWrap: 'wrap',
+          marginTop: 'var(--space-16)',
+          paddingTop: 'var(--space-8)',
+          borderTop: '1px solid rgba(255,255,255,0.12)',
         }}>
           {[
-            { value: "15+", label: "Years Experience" },
-            { value: "500+", label: "Projects Completed" },
-            { value: "100%", label: "Licensed & Insured" },
+            { value: '15+', label: 'Years in Business' },
+            { value: '500+', label: 'Projects Completed' },
+            { value: '100%', label: 'Licensed & Insured' },
           ].map(stat => (
             <div key={stat.label}>
               <div style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "var(--text-xl)",
+                fontFamily: 'var(--font-display)',
+                fontSize: 'var(--text-xl)',
                 fontWeight: 800,
-                color: "var(--red)",
+                color: 'var(--gold)',
                 lineHeight: 1,
-                marginBottom: "var(--space-1)",
+                marginBottom: 'var(--space-1)',
               }}>{stat.value}</div>
               <div style={{
-                fontSize: "var(--text-xs)",
-                color: "var(--text-faint)",
-                textTransform: "uppercase",
-                letterSpacing: "0.08em",
+                fontSize: 'var(--text-xs)',
+                color: 'rgba(255,255,255,0.5)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.09em',
               }}>{stat.label}</div>
             </div>
           ))}
         </div>
-      </div>
-
-      {/* Crosshair decoration */}
-      <div style={{
-        position: "absolute",
-        right: "5%",
-        top: "50%",
-        transform: "translateY(-50%)",
-        width: "clamp(200px, 30vw, 420px)",
-        aspectRatio: "1",
-        opacity: 0.06,
-        pointerEvents: "none",
-      }}>
-        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="100" cy="100" r="90" stroke="white" strokeWidth="1.5"/>
-          <line x1="100" y1="0" x2="100" y2="40" stroke="white" strokeWidth="1.5"/>
-          <line x1="100" y1="160" x2="100" y2="200" stroke="white" strokeWidth="1.5"/>
-          <line x1="0" y1="100" x2="40" y2="100" stroke="white" strokeWidth="1.5"/>
-          <line x1="160" y1="100" x2="200" y2="100" stroke="white" strokeWidth="1.5"/>
-          <circle cx="100" cy="100" r="4" fill="white"/>
-        </svg>
       </div>
     </section>
   );
