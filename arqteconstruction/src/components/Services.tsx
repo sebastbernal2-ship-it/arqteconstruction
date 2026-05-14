@@ -8,12 +8,12 @@ const SERVICES = [
   {
     id: 'remodeling',
     title: 'Remodeling',
-    description: 'Kitchens, bathrooms, full gut renovations — transformed to your exact specifications.',
+    description: 'Kitchens, bathrooms, full gut renovations transformed to your exact specifications.',
   },
   {
     id: 'exterior-envelope',
     title: 'Exterior Envelope',
-    description: 'Impact-rated facades, cladding systems, and waterproofing built for South Florida's climate.',
+    description: 'Impact-rated facades, cladding systems, and waterproofing built for South Florida climate.',
   },
   {
     id: 'windows-doors',
@@ -23,7 +23,7 @@ const SERVICES = [
   {
     id: 'interior-glass',
     title: 'Interior Glass',
-    description: 'Frameless shower enclosures, glass partitions, railings, and mirrors — cut and installed precisely.',
+    description: 'Frameless shower enclosures, glass partitions, railings, and mirrors cut and installed precisely.',
   },
   {
     id: 'service-maintenance',
@@ -45,7 +45,6 @@ export default function Services() {
         justifyContent: 'flex-end',
       }}
     >
-      {/* Background image placeholder — replace with actual project photo */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -53,12 +52,10 @@ export default function Services() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }} />
-
-      {/* Strong dark overlay so cards read cleanly */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to bottom, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.72) 60%, rgba(10,9,8,0.88) 100%)',
+        background: 'linear-gradient(to bottom, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.72) 60%, rgba(10,9,8,0.90) 100%)',
       }} />
 
       <div style={{
@@ -69,17 +66,10 @@ export default function Services() {
         margin: '0 auto',
         padding: 'var(--space-24) clamp(1.5rem, 5vw, 3rem)',
       }}>
-        {/* Section header */}
         <div style={{ marginBottom: 'var(--space-12)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
-            <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--gold)' }} />
-            <span style={{
-              fontSize: 'var(--text-xs)',
-              fontWeight: 600,
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.55)',
-            }}>What We Build</span>
+            <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--green)', filter: 'brightness(1.8)' }} />
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>What We Build</span>
           </div>
           <h2 style={{
             fontFamily: 'var(--font-display)',
@@ -91,7 +81,6 @@ export default function Services() {
           }}>Our Services</h2>
         </div>
 
-        {/* Service cards grid */}
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fill, minmax(min(320px,100%), 1fr))',
@@ -101,56 +90,38 @@ export default function Services() {
             <div
               key={service.id}
               style={{
-                background: 'rgba(255,255,255,0.08)',
+                background: 'rgba(255,255,255,0.07)',
                 backdropFilter: 'blur(8px)',
                 WebkitBackdropFilter: 'blur(8px)',
-                border: '1px solid rgba(255,255,255,0.12)',
+                border: '1px solid rgba(255,255,255,0.11)',
                 borderRadius: 'var(--radius-md)',
-                padding: 'var(--space-6) var(--space-6)',
+                padding: 'var(--space-6)',
                 transition: 'background var(--transition), border-color var(--transition), transform var(--transition)',
                 cursor: 'default',
               }}
               onMouseEnter={e => {
-                (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.13)';
-                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(160,130,58,0.55)';
+                (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.12)';
+                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(45,90,61,0.65)';
                 (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={e => {
-                (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.08)';
-                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.12)';
+                (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.07)';
+                (e.currentTarget as HTMLDivElement).style.borderColor = 'rgba(255,255,255,0.11)';
                 (e.currentTarget as HTMLDivElement).style.transform = 'none';
               }}
             >
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 'var(--space-3)',
-                marginBottom: 'var(--space-3)',
-              }}>
-                <span style={{ display: 'block', width: '20px', height: '2px', background: 'var(--gold)', flexShrink: 0 }} />
-                <h3 style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'var(--text-base)',
-                  fontWeight: 700,
-                  color: '#ffffff',
-                  letterSpacing: '-0.01em',
-                }}>{service.title}</h3>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
+                <span style={{ display: 'block', width: '18px', height: '2px', background: 'var(--green)', filter: 'brightness(1.8)', flexShrink: 0 }} />
+                <h3 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-base)', fontWeight: 700, color: '#ffffff', letterSpacing: '-0.01em' }}>{service.title}</h3>
               </div>
-              <p style={{
-                fontSize: 'var(--text-sm)',
-                color: 'rgba(255,255,255,0.62)',
-                lineHeight: 1.65,
-                paddingLeft: 'calc(20px + var(--space-3))',
-              }}>{service.description}</p>
+              <p style={{ fontSize: 'var(--text-sm)', color: 'rgba(255,255,255,0.60)', lineHeight: 1.65, paddingLeft: 'calc(18px + var(--space-3))' }}>{service.description}</p>
             </div>
           ))}
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 640px) {
-          .services-grid { grid-template-columns: 1fr !important; }
-        }
+        @media (max-width: 640px) { .services-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>
   );

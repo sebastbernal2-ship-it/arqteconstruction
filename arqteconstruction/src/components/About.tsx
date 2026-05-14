@@ -17,11 +17,9 @@ export default function About() {
         alignItems: 'center',
       }} className="about-grid">
 
-        {/* Left — image */}
-        <div style={{ position: 'relative' }}>
-          {/* Main placeholder image */}
+        {/* Left: image */}
+        <div style={{ position: 'relative', paddingBottom: '24px', paddingRight: '24px' }}>
           <div style={{
-            position: 'relative',
             borderRadius: 'var(--radius-lg)',
             overflow: 'hidden',
             aspectRatio: '4/5',
@@ -34,14 +32,10 @@ export default function About() {
               loading="lazy"
             />
           </div>
-
-          {/* Floating stat card */}
           <div style={{
             position: 'absolute',
-            bottom: '-var(--space-6)',
-            right: '-var(--space-6)',
-            bottom: '-24px',
-            right: '-24px',
+            bottom: 0,
+            right: 0,
             background: 'var(--charcoal)',
             color: '#fff',
             borderRadius: 'var(--radius-lg)',
@@ -49,35 +43,16 @@ export default function About() {
             boxShadow: 'var(--shadow-lg)',
             minWidth: '160px',
           }}>
-            <div style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'var(--text-2xl)',
-              fontWeight: 800,
-              color: 'var(--gold)',
-              letterSpacing: '-0.03em',
-              lineHeight: 1,
-              marginBottom: 'var(--space-1)',
-            }}>15+</div>
-            <div style={{
-              fontSize: 'var(--text-xs)',
-              color: 'rgba(255,255,255,0.55)',
-              textTransform: 'uppercase',
-              letterSpacing: '0.09em',
-            }}>Years Experience</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-2xl)', fontWeight: 800, color: '#fff', letterSpacing: '-0.03em', lineHeight: 1, marginBottom: 'var(--space-1)' }}>15+</div>
+            <div style={{ fontSize: 'var(--text-xs)', color: 'rgba(255,255,255,0.50)', textTransform: 'uppercase', letterSpacing: '0.09em' }}>Years Experience</div>
           </div>
         </div>
 
-        {/* Right — copy */}
+        {/* Right: copy */}
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>
-            <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--gold)' }} />
-            <span style={{
-              fontSize: 'var(--text-xs)',
-              fontWeight: 600,
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: 'var(--text-faint)',
-            }}>About Us</span>
+            <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--green)' }} />
+            <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>About Us</span>
           </div>
 
           <h2 style={{
@@ -87,34 +62,24 @@ export default function About() {
             letterSpacing: '-0.02em',
             lineHeight: 1.1,
             marginBottom: 'var(--space-6)',
+            color: 'var(--text)',
           }}>
-            Miami's Trusted<br />
-            <span style={{ color: 'var(--gold)' }}>General Contractor</span>
+            Miami&apos;s Trusted<br />
+            <span style={{ color: 'var(--green)' }}>General Contractor</span>
           </h2>
 
-          <p style={{
-            color: 'var(--text-muted)',
-            lineHeight: 1.78,
-            marginBottom: 'var(--space-5)',
-            fontSize: 'var(--text-base)',
-          }}>
+          <p style={{ color: 'var(--text-muted)', lineHeight: 1.78, marginBottom: 'var(--space-5)', fontSize: 'var(--text-base)' }}>
             ArTeq Construction is a Miami-based general contractor with over 15 years
             of experience across South Florida. We handle residential and commercial projects
-            with equal precision — from a single-family home remodel to a full commercial build-out.
+            with equal precision &mdash; from a single-family home remodel to a full commercial build-out.
           </p>
 
-          <p style={{
-            color: 'var(--text-muted)',
-            lineHeight: 1.78,
-            marginBottom: 'var(--space-8)',
-            fontSize: 'var(--text-base)',
-          }}>
+          <p style={{ color: 'var(--text-muted)', lineHeight: 1.78, marginBottom: 'var(--space-8)', fontSize: 'var(--text-base)' }}>
             Every project gets a dedicated point of contact, transparent scheduling, and
-            a team that shows up. We're licensed, fully insured, and Miami-Dade certified —
-            because our clients' investments deserve nothing less.
+            a team that shows up. We are licensed, fully insured, and Miami-Dade certified &mdash;
+            because our clients&apos; investments deserve nothing less.
           </p>
 
-          {/* Credential pills */}
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--space-3)', marginBottom: 'var(--space-8)' }}>
             {['Licensed GC', 'Miami-Dade Certified', 'Fully Insured', 'Bonded'].map(item => (
               <span key={item} style={{
@@ -122,8 +87,8 @@ export default function About() {
                 alignItems: 'center',
                 gap: 'var(--space-2)',
                 padding: '0.4rem 1rem',
-                background: 'var(--gold-light)',
-                color: 'var(--gold-hover)',
+                background: 'var(--green-light)',
+                color: 'var(--green-hover)',
                 fontSize: 'var(--text-xs)',
                 fontWeight: 600,
                 borderRadius: 'var(--radius-sm)',
@@ -135,7 +100,6 @@ export default function About() {
             ))}
           </div>
 
-          {/* Mini stats row */}
           <div style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
@@ -148,15 +112,7 @@ export default function About() {
               { value: '100%', label: 'Client Satisfaction' },
             ].map(s => (
               <div key={s.label}>
-                <div style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: 'var(--text-xl)',
-                  fontWeight: 800,
-                  color: 'var(--text)',
-                  letterSpacing: '-0.02em',
-                  lineHeight: 1,
-                  marginBottom: 'var(--space-1)',
-                }}>{s.value}</div>
+                <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-xl)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 'var(--space-1)' }}>{s.value}</div>
                 <div style={{ fontSize: 'var(--text-xs)', color: 'var(--text-faint)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>{s.label}</div>
               </div>
             ))}
