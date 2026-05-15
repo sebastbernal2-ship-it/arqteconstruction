@@ -1,35 +1,11 @@
 "use client";
 const SERVICES = [
-  {
-    id: 'new-construction',
-    title: 'New Construction',
-    description: 'Ground-up residential and commercial builds, delivered on schedule with full permit management.',
-  },
-  {
-    id: 'remodeling',
-    title: 'Remodeling',
-    description: 'Kitchens, bathrooms, full gut renovations transformed to your exact specifications.',
-  },
-  {
-    id: 'exterior-envelope',
-    title: 'Exterior Envelope',
-    description: 'Impact-rated facades, cladding systems, and waterproofing built for South Florida climate.',
-  },
-  {
-    id: 'windows-doors',
-    title: 'Windows, Doors & Railings',
-    description: 'Miami-Dade certified impact windows, custom doors, and architectural aluminum railings.',
-  },
-  {
-    id: 'interior-glass',
-    title: 'Interior Glass',
-    description: 'Frameless shower enclosures, glass partitions, railings, and mirrors cut and installed precisely.',
-  },
-  {
-    id: 'service-maintenance',
-    title: 'Service & Maintenance',
-    description: 'Scheduled maintenance, warranty repairs, and emergency response year-round.',
-  },
+  { id: 'new-construction', title: 'New Construction', description: 'Ground-up residential and commercial builds, delivered on schedule with full permit management.' },
+  { id: 'remodeling', title: 'Remodeling', description: 'Kitchens, bathrooms, full gut renovations transformed to your exact specifications.' },
+  { id: 'exterior-envelope', title: 'Exterior Envelope', description: 'Impact-rated facades, cladding systems, and waterproofing built for South Florida climate.' },
+  { id: 'windows-doors', title: 'Windows, Doors & Railings', description: 'Miami-Dade certified impact windows, custom doors, and architectural aluminum railings.' },
+  { id: 'interior-glass', title: 'Interior Glass', description: 'Frameless shower enclosures, glass partitions, railings, and mirrors cut and installed precisely.' },
+  { id: 'service-maintenance', title: 'Service & Maintenance', description: 'Scheduled maintenance, warranty repairs, and emergency response year-round.' },
 ];
 
 export default function Services() {
@@ -43,9 +19,12 @@ export default function Services() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'flex-end',
+        /* The section itself sits on a dark base so the top/bottom fades
+           blend naturally with both the hero above and About below */
+        background: '#0e0c0a',
       }}
     >
-      {/* Background image */}
+      {/* Background photo */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -54,40 +33,50 @@ export default function Services() {
         backgroundPosition: 'center',
       }} />
 
-      {/* Dark overlay */}
+      {/* Dark overlay for text legibility */}
       <div style={{
         position: 'absolute',
         inset: 0,
-        background: 'linear-gradient(to bottom, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.72) 60%, rgba(10,9,8,0.90) 100%)',
+        background: 'linear-gradient(to bottom, rgba(10,9,8,0.50) 0%, rgba(10,9,8,0.75) 60%, rgba(10,9,8,0.92) 100%)',
       }} />
 
-      {/* Top fade: white (from hero/about) → transparent so image shows */}
+      {/*
+        Top transition: Hero ends at solid #0e0c0a. Services background is #0e0c0a.
+        Fade the photo IN from that same dark so it emerges seamlessly — no seam at all.
+      */}
       <div style={{
         position: 'absolute',
         top: 0, left: 0, right: 0,
-        height: '140px',
-        background: 'linear-gradient(to bottom, #f7f6f2 0%, transparent 100%)',
+        height: '200px',
+        background: 'linear-gradient(to bottom, #0e0c0a 0%, transparent 100%)',
         pointerEvents: 'none',
-        zIndex: 1,
+        zIndex: 2,
       }} />
 
-      {/* Bottom fade: dark → white (into About section) */}
+      {/*
+        Bottom transition: Services dark (#0a0908 at 92%) → About warm bg (#f5f3ef).
+        We fade the section's own background to the About color over a tall band.
+      */}
       <div style={{
         position: 'absolute',
         bottom: 0, left: 0, right: 0,
-        height: '140px',
-        background: 'linear-gradient(to bottom, transparent 0%, #f7f6f2 100%)',
+        height: '200px',
+        background: 'linear-gradient(to bottom, transparent 0%, #f5f3ef 100%)',
         pointerEvents: 'none',
-        zIndex: 1,
+        zIndex: 2,
       }} />
 
       <div style={{
         position: 'relative',
-        zIndex: 2,
+        zIndex: 3,
         width: '100%',
         maxWidth: 'var(--content)',
         margin: '0 auto',
         padding: 'var(--space-24) clamp(1.5rem, 5vw, 3rem)',
+        /* Extra top padding so content clears the top fade */
+        paddingTop: 'calc(var(--space-24) + 60px)',
+        /* Extra bottom padding so content clears the bottom fade */
+        paddingBottom: 'calc(var(--space-24) + 80px)',
       }}>
         <div style={{ marginBottom: 'var(--space-12)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-4)' }}>

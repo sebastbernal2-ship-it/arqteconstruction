@@ -20,20 +20,26 @@ export default function Hero() {
         backgroundPosition: 'center 30%',
       }} />
 
-      {/* Dark overlay for text legibility */}
+      {/* Dark overlay */}
       <div style={{
         position: 'absolute',
         inset: 0,
         background: 'linear-gradient(to top, rgba(14,12,10,0.85) 0%, rgba(14,12,10,0.40) 55%, rgba(14,12,10,0.15) 100%)',
       }} />
 
-      {/* Bottom fade: dark image → white background of next section */}
+      {/*
+        Transition out: the bottom of the hero fades from the dark overlay color
+        (#0e0c0a at ~85% opacity) smoothly into the warm bg of the Services section
+        which also starts dark. We dissolve the image itself by fading to the exact
+        near-black (#0e0c0a) so there is no abrupt cut.
+      */}
       <div style={{
         position: 'absolute',
         bottom: 0, left: 0, right: 0,
-        height: '160px',
-        background: 'linear-gradient(to bottom, transparent 0%, #f7f6f2 100%)',
+        height: '220px',
+        background: 'linear-gradient(to bottom, transparent 0%, #0e0c0a 100%)',
         pointerEvents: 'none',
+        zIndex: 1,
       }} />
 
       {/* Left accent line */}
@@ -52,7 +58,7 @@ export default function Hero() {
         margin: '0 auto',
         padding: 'var(--space-24) clamp(1.5rem, 5vw, 3rem)',
         paddingTop: '120px',
-        paddingBottom: 'calc(var(--space-24) + 80px)',
+        paddingBottom: 'calc(var(--space-24) + 60px)',
       }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-5)' }}>
           <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--green)' }} />
