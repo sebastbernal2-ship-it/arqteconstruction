@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 const NAV_LINKS = [
@@ -9,14 +9,7 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', handler, { passive: true });
-    return () => window.removeEventListener('scroll', handler);
-  }, []);
 
   return (
     <>
@@ -24,13 +17,11 @@ export default function Navbar() {
         position: 'fixed',
         top: 0, left: 0, right: 0,
         zIndex: 100,
-        height: '72px',
+        height: '88px',
         display: 'flex',
         alignItems: 'center',
-        background: scrolled ? 'rgba(255,255,255,0.97)' : 'transparent',
-        borderBottom: scrolled ? '1px solid rgba(0,0,0,0.08)' : '1px solid transparent',
-        backdropFilter: scrolled ? 'blur(12px)' : 'none',
-        transition: 'background 300ms ease, border-color 300ms ease, backdrop-filter 300ms ease',
+        background: 'var(--charcoal)',
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
       }}>
         <div style={{
           maxWidth: 'var(--content)',
@@ -41,19 +32,22 @@ export default function Navbar() {
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
-          {/* Logo */}
-          <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
-            <Image src="/logo.png" alt="ArTeq Construction" width={44} height={44} style={{ objectFit: 'contain' }} />
-            <span style={{
-              fontFamily: 'var(--font-display)',
-              fontWeight: 700,
-              fontSize: 'var(--text-lg)',
-              letterSpacing: '-0.01em',
-              color: 'var(--text)',
-            }}>
-              ArTeq
-              <span style={{ color: 'var(--gold)', marginLeft: '2px' }}>.</span>
-            </span>
+          {/* Logo + title image */}
+          <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: '1rem', textDecoration: 'none' }}>
+            <Image
+              src="/logo.png"
+              alt="ArTeq Construction logo"
+              width={64}
+              height={64}
+              style={{ objectFit: 'contain', flexShrink: 0 }}
+            />
+            <Image
+              src="/title.png"
+              alt="ArTeq Construction"
+              width={220}
+              height={52}
+              style={{ objectFit: 'contain', flexShrink: 0 }}
+            />
           </a>
 
           {/* Desktop nav */}
@@ -62,26 +56,30 @@ export default function Navbar() {
               <a key={link.href} href={link.href} style={{
                 fontSize: 'var(--text-sm)',
                 fontWeight: 500,
-                color: 'var(--text-muted)',
-                letterSpacing: '0.01em',
+                color: 'rgba(255,255,255,0.75)',
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
                 transition: 'color var(--transition)',
+                textDecoration: 'none',
               }}
-                onMouseEnter={e => e.currentTarget.style.color = 'var(--text)'}
-                onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
+                onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.75)')}
               >{link.label}</a>
             ))}
             <a href="#contact" style={{
               padding: '0.6rem 1.5rem',
-              background: 'var(--charcoal)',
+              background: 'var(--green)',
               color: '#fff',
               fontSize: 'var(--text-sm)',
-              fontWeight: 500,
+              fontWeight: 600,
               borderRadius: 'var(--radius-md)',
-              letterSpacing: '0.02em',
+              letterSpacing: '0.03em',
+              textTransform: 'uppercase',
               transition: 'background var(--transition)',
+              textDecoration: 'none',
             }}
-              onMouseEnter={e => e.currentTarget.style.background = 'var(--gold)'}
-              onMouseLeave={e => e.currentTarget.style.background = 'var(--charcoal)'}
+              onMouseEnter={e => (e.currentTarget.style.background = '#1e3d2a')}
+              onMouseLeave={e => (e.currentTarget.style.background = 'var(--green)')}
             >Get a Quote</a>
           </nav>
 
@@ -90,11 +88,11 @@ export default function Navbar() {
             className="hamburger"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
-            style={{ display: 'none', flexDirection: 'column', gap: '5px', padding: 'var(--space-2)' }}
+            style={{ display: 'none', flexDirection: 'column', gap: '5px', padding: 'var(--space-2)', background: 'none', border: 'none', cursor: 'pointer' }}
           >
-            <span style={{ display:'block', width:'22px', height:'2px', background:'var(--text)', transition:'var(--transition)', transform: open ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
-            <span style={{ display:'block', width:'22px', height:'2px', background:'var(--text)', transition:'var(--transition)', opacity: open ? 0 : 1 }} />
-            <span style={{ display:'block', width:'22px', height:'2px', background:'var(--text)', transition:'var(--transition)', transform: open ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
+            <span style={{ display: 'block', width: '24px', height: '2px', background: '#fff', transition: 'var(--transition)', transform: open ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
+            <span style={{ display: 'block', width: '24px', height: '2px', background: '#fff', transition: 'var(--transition)', opacity: open ? 0 : 1 }} />
+            <span style={{ display: 'block', width: '24px', height: '2px', background: '#fff', transition: 'var(--transition)', transform: open ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
           </button>
         </div>
       </header>
@@ -102,19 +100,19 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div style={{
-          position: 'fixed', top: '72px', left: 0, right: 0, bottom: 0,
-          background: 'var(--surface)',
+          position: 'fixed', top: '88px', left: 0, right: 0, bottom: 0,
+          background: 'var(--charcoal)',
           zIndex: 99,
           display: 'flex',
           flexDirection: 'column',
           padding: 'var(--space-8) clamp(1.5rem, 4vw, 3rem)',
           gap: 'var(--space-6)',
-          borderTop: '1px solid var(--border)',
+          borderTop: '1px solid rgba(255,255,255,0.08)',
         }}>
           {NAV_LINKS.map(link => (
             <a key={link.href} href={link.href}
               onClick={() => setOpen(false)}
-              style={{ fontSize: 'var(--text-xl)', fontFamily: 'var(--font-display)', fontWeight: 700, color: 'var(--text)' }}
+              style={{ fontSize: 'var(--text-xl)', fontFamily: 'var(--font-display)', fontWeight: 700, color: '#fff', textDecoration: 'none' }}
             >{link.label}</a>
           ))}
           <a href="#contact"
@@ -122,12 +120,13 @@ export default function Navbar() {
             style={{
               marginTop: 'var(--space-4)',
               padding: '1rem 2rem',
-              background: 'var(--charcoal)',
+              background: 'var(--green)',
               color: '#fff',
               fontSize: 'var(--text-base)',
-              fontWeight: 500,
+              fontWeight: 600,
               borderRadius: 'var(--radius-md)',
               textAlign: 'center',
+              textDecoration: 'none',
             }}
           >Get a Quote</a>
         </div>
