@@ -17,68 +17,68 @@ export default function Navbar() {
         position: 'fixed',
         top: 0, left: 0, right: 0,
         zIndex: 100,
-        height: '96px',
+        height: '88px',
         display: 'flex',
         alignItems: 'center',
         background: '#ffffff',
-        borderBottom: '1px solid rgba(0,0,0,0.1)',
-        boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+        borderBottom: '1px solid rgba(0,0,0,0.09)',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.06)',
       }}>
         <div style={{
-          maxWidth: 'var(--content)',
-          margin: '0 auto',
-          padding: '0 clamp(1.5rem, 4vw, 3rem)',
           width: '100%',
+          padding: '0 clamp(1.5rem, 4vw, 3rem)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
         }}>
 
-          {/* Brand: logo + title image */}
-          <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: '1rem', textDecoration: 'none' }}>
+          {/* Brand: flush left, no max-width centering */}
+          <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', flexShrink: 0 }}>
             <Image
               src="/logo.png"
               alt="ArTeq Construction logo"
-              width={80}
-              height={80}
+              width={76}
+              height={76}
               style={{ objectFit: 'contain', flexShrink: 0 }}
             />
             <Image
               src="/title.png"
               alt="ArTeq Construction"
-              width={260}
-              height={62}
+              width={240}
+              height={58}
               style={{ objectFit: 'contain', flexShrink: 0 }}
             />
           </a>
 
           {/* Desktop nav */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-8)' }} className="desktop-nav">
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '2rem' }} className="desktop-nav">
             {NAV_LINKS.map(link => (
               <a key={link.href} href={link.href} style={{
-                fontSize: 'var(--text-sm)',
+                fontSize: '0.8rem',
                 fontWeight: 600,
                 color: '#3a3a3a',
-                letterSpacing: '0.04em',
+                letterSpacing: '0.06em',
                 textTransform: 'uppercase',
-                transition: 'color var(--transition)',
+                transition: 'color 180ms ease',
                 textDecoration: 'none',
+                whiteSpace: 'nowrap',
               }}
                 onMouseEnter={e => (e.currentTarget.style.color = 'var(--green)')}
                 onMouseLeave={e => (e.currentTarget.style.color = '#3a3a3a')}
               >{link.label}</a>
             ))}
             <a href="#contact" style={{
-              padding: '0.65rem 1.6rem',
+              padding: '0.6rem 1.4rem',
               background: 'var(--charcoal)',
               color: '#fff',
-              fontSize: 'var(--text-sm)',
-              fontWeight: 600,
-              borderRadius: 'var(--radius-md)',
-              letterSpacing: '0.03em',
+              fontSize: '0.78rem',
+              fontWeight: 700,
+              borderRadius: '6px',
+              letterSpacing: '0.06em',
               textTransform: 'uppercase',
-              transition: 'background var(--transition)',
+              transition: 'background 180ms ease',
               textDecoration: 'none',
+              whiteSpace: 'nowrap',
             }}
               onMouseEnter={e => (e.currentTarget.style.background = 'var(--green)')}
               onMouseLeave={e => (e.currentTarget.style.background = 'var(--charcoal)')}
@@ -90,11 +90,11 @@ export default function Navbar() {
             className="hamburger"
             onClick={() => setOpen(!open)}
             aria-label="Toggle menu"
-            style={{ display: 'none', flexDirection: 'column', gap: '5px', padding: 'var(--space-2)', background: 'none', border: 'none', cursor: 'pointer' }}
+            style={{ display: 'none', flexDirection: 'column', gap: '5px', padding: '8px', background: 'none', border: 'none', cursor: 'pointer' }}
           >
-            <span style={{ display: 'block', width: '24px', height: '2px', background: '#3a3a3a', transition: 'var(--transition)', transform: open ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
-            <span style={{ display: 'block', width: '24px', height: '2px', background: '#3a3a3a', transition: 'var(--transition)', opacity: open ? 0 : 1 }} />
-            <span style={{ display: 'block', width: '24px', height: '2px', background: '#3a3a3a', transition: 'var(--transition)', transform: open ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
+            <span style={{ display: 'block', width: '24px', height: '2px', background: '#3a3a3a', transition: '180ms ease', transform: open ? 'rotate(45deg) translate(5px,5px)' : 'none' }} />
+            <span style={{ display: 'block', width: '24px', height: '2px', background: '#3a3a3a', transition: '180ms ease', opacity: open ? 0 : 1 }} />
+            <span style={{ display: 'block', width: '24px', height: '2px', background: '#3a3a3a', transition: '180ms ease', transform: open ? 'rotate(-45deg) translate(5px,-5px)' : 'none' }} />
           </button>
         </div>
       </header>
@@ -102,31 +102,31 @@ export default function Navbar() {
       {/* Mobile menu */}
       {open && (
         <div style={{
-          position: 'fixed', top: '96px', left: 0, right: 0, bottom: 0,
+          position: 'fixed', top: '88px', left: 0, right: 0, bottom: 0,
           background: '#ffffff',
           zIndex: 99,
           display: 'flex',
           flexDirection: 'column',
-          padding: 'var(--space-8) clamp(1.5rem, 4vw, 3rem)',
-          gap: 'var(--space-6)',
+          padding: '2rem clamp(1.5rem, 4vw, 3rem)',
+          gap: '1.5rem',
           borderTop: '1px solid rgba(0,0,0,0.08)',
         }}>
           {NAV_LINKS.map(link => (
             <a key={link.href} href={link.href}
               onClick={() => setOpen(false)}
-              style={{ fontSize: 'var(--text-xl)', fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1a1a1a', textDecoration: 'none' }}
+              style={{ fontSize: '1.5rem', fontFamily: 'var(--font-display)', fontWeight: 700, color: '#1a1a1a', textDecoration: 'none' }}
             >{link.label}</a>
           ))}
           <a href="#contact"
             onClick={() => setOpen(false)}
             style={{
-              marginTop: 'var(--space-4)',
+              marginTop: '1rem',
               padding: '1rem 2rem',
               background: 'var(--charcoal)',
               color: '#fff',
-              fontSize: 'var(--text-base)',
+              fontSize: '1rem',
               fontWeight: 600,
-              borderRadius: 'var(--radius-md)',
+              borderRadius: '6px',
               textAlign: 'center',
               textDecoration: 'none',
             }}
