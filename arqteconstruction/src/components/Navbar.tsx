@@ -34,13 +34,26 @@ export default function Navbar() {
         }}>
           {/* Logo + title image */}
           <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: '1rem', textDecoration: 'none' }}>
-            <Image
-              src="/logo.png"
-              alt="ArTeq Construction logo"
-              width={64}
-              height={64}
-              style={{ objectFit: 'contain', flexShrink: 0 }}
-            />
+            {/* White circle behind logo so it pops off the dark bar */}
+            <div style={{
+              width: '68px',
+              height: '68px',
+              borderRadius: '50%',
+              background: '#ffffff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              padding: '4px',
+            }}>
+              <Image
+                src="/logo.png"
+                alt="ArTeq Construction logo"
+                width={60}
+                height={60}
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
             <Image
               src="/title.png"
               alt="ArTeq Construction"
