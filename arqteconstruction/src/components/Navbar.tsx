@@ -32,8 +32,8 @@ export default function Navbar() {
           justifyContent: 'space-between',
         }}>
 
-          {/* Brand: flush left, no max-width centering */}
-          <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', textDecoration: 'none', flexShrink: 0 }}>
+          {/* Brand: logo tight to title */}
+          <a href="#home" style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', textDecoration: 'none', flexShrink: 0 }}>
             <Image
               src="/logo.png"
               alt="ArTeq Construction logo"

@@ -11,6 +11,7 @@ export default function Hero() {
         overflow: 'hidden',
       }}
     >
+      {/* Background image */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -18,11 +19,24 @@ export default function Hero() {
         backgroundSize: 'cover',
         backgroundPosition: 'center 30%',
       }} />
+
+      {/* Dark overlay for text legibility */}
       <div style={{
         position: 'absolute',
         inset: 0,
         background: 'linear-gradient(to top, rgba(14,12,10,0.85) 0%, rgba(14,12,10,0.40) 55%, rgba(14,12,10,0.15) 100%)',
       }} />
+
+      {/* Bottom fade: dark image → white background of next section */}
+      <div style={{
+        position: 'absolute',
+        bottom: 0, left: 0, right: 0,
+        height: '160px',
+        background: 'linear-gradient(to bottom, transparent 0%, #f7f6f2 100%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Left accent line */}
       <div style={{
         position: 'absolute',
         left: 0, top: '18%', bottom: '18%',
@@ -38,6 +52,7 @@ export default function Hero() {
         margin: '0 auto',
         padding: 'var(--space-24) clamp(1.5rem, 5vw, 3rem)',
         paddingTop: '120px',
+        paddingBottom: 'calc(var(--space-24) + 80px)',
       }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--space-3)', marginBottom: 'var(--space-5)' }}>
           <span style={{ display: 'block', width: '28px', height: '2px', background: 'var(--green)' }} />
@@ -84,6 +99,7 @@ export default function Hero() {
               letterSpacing: '0.03em',
               textTransform: 'uppercase',
               transition: 'background var(--transition), transform var(--transition)',
+              textDecoration: 'none',
             }}
             onMouseEnter={e => { e.currentTarget.style.background = 'var(--green-hover)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'var(--green)'; e.currentTarget.style.transform = 'none'; }}
@@ -103,6 +119,7 @@ export default function Hero() {
               border: '1px solid rgba(255,255,255,0.28)',
               letterSpacing: '0.02em',
               transition: 'border-color var(--transition), color var(--transition)',
+              textDecoration: 'none',
             }}
             onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.55)'; e.currentTarget.style.color = '#fff'; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.28)'; e.currentTarget.style.color = 'rgba(255,255,255,0.75)'; }}

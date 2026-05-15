@@ -45,6 +45,7 @@ export default function Services() {
         justifyContent: 'flex-end',
       }}
     >
+      {/* Background image */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -52,10 +53,32 @@ export default function Services() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }} />
+
+      {/* Dark overlay */}
       <div style={{
         position: 'absolute',
         inset: 0,
         background: 'linear-gradient(to bottom, rgba(10,9,8,0.45) 0%, rgba(10,9,8,0.72) 60%, rgba(10,9,8,0.90) 100%)',
+      }} />
+
+      {/* Top fade: white (from hero/about) → transparent so image shows */}
+      <div style={{
+        position: 'absolute',
+        top: 0, left: 0, right: 0,
+        height: '140px',
+        background: 'linear-gradient(to bottom, #f7f6f2 0%, transparent 100%)',
+        pointerEvents: 'none',
+        zIndex: 1,
+      }} />
+
+      {/* Bottom fade: dark → white (into About section) */}
+      <div style={{
+        position: 'absolute',
+        bottom: 0, left: 0, right: 0,
+        height: '140px',
+        background: 'linear-gradient(to bottom, transparent 0%, #f7f6f2 100%)',
+        pointerEvents: 'none',
+        zIndex: 1,
       }} />
 
       <div style={{
